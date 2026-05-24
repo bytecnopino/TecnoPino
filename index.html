@@ -391,6 +391,12 @@
         .gallery-nav.prev { left: 8px; }
         .gallery-nav.next { right: 8px; }
 
+        /* Ocultar flechas y dots cuando solo hay 1 imagen */
+        .gallery-single .gallery-nav,
+        .gallery-single .gallery-dots {
+            display: none !important;
+        }
+
         /* Indicadores de puntos */
         .gallery-dots {
             position: absolute;
@@ -443,11 +449,36 @@
             color: var(--dark);
         }
 
+        /* ===== DESCRIPCIÓN COLAPSABLE ===== */
         .product-description {
             font-size: 0.9rem;
             color: #555;
             line-height: 1.7;
             margin-bottom: 0.8rem;
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+            transition: max-height 0.4s ease;
+        }
+
+        .product-description.expanded {
+            max-height: 2000px;
+        }
+
+        .product-description::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(transparent, var(--card-bg));
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .product-description.expanded::after {
+            opacity: 0;
         }
 
         .product-description ul {
@@ -469,6 +500,31 @@
             color: #39ff14;
             font-weight: bold;
             font-size: 0.85rem;
+        }
+
+        .btn-ver-mas {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 0.2rem 0;
+            margin-bottom: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.3s;
+        }
+
+        .btn-ver-mas:hover {
+            color: #0099bb;
+        }
+
+        .btn-ver-mas i {
+            font-size: 0.7rem;
+            transition: transform 0.3s;
         }
 
         .product-price {
@@ -642,7 +698,8 @@
             .product-description { 
                 font-size: 0.78rem; 
                 line-height: 1.5;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.4rem;
+                max-height: 90px;
             }
             .product-description ul li { 
                 padding-left: 0.9rem; 
@@ -686,6 +743,11 @@
             .footer-content { grid-template-columns: 1fr; text-align: center; gap: 1.2rem; }
             .social-links { justify-content: center; }
             footer { padding: 2rem 1rem 1rem; margin-top: 2rem; }
+
+            .btn-ver-mas {
+                font-size: 0.75rem;
+                margin-bottom: 0.4rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -698,7 +760,7 @@
             .hero { padding: 1.8rem 0.8rem; }
             .btn-whatsapp { padding: 0.6rem 1rem; font-size: 0.8rem; }
             .product-name { font-size: 0.85rem; }
-            .product-description { font-size: 0.75rem; }
+            .product-description { font-size: 0.75rem; max-height: 85px; }
             .product-price { font-size: 0.9rem; }
             .btn { font-size: 0.7rem; padding: 0.45rem; }
         }
@@ -943,6 +1005,7 @@
         }
 </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<base target="_blank">
 </head>
 <body>
 
@@ -1013,7 +1076,7 @@
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('ecoflow', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('ecoflow', 1)">›</button>
-                        <div class="gallery-dots" data-dots="ecoflow"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="ecoflow"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                         <span class="product-badge">NUEVO</span>
                     </div>
                     <div class="product-info">
@@ -1035,14 +1098,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card" data-name="olla arrocera 1.5l">
+                <div class="product-card" data-name="ecoflow delta 3">
                     <div class="product-image">
-                        <div class="gallery" data-gallery="arrocera15">
-                            <img src="imagenes/delta.jpg" class="gallery-img active" alt="arrocera15">
+                        <div class="gallery" data-gallery="delta3">
+                            <img src="imagenes/delta.jpg" class="gallery-img active" alt="Ecoflow Delta 3">
                         </div>
-                        <button class="gallery-nav prev" onclick="changePhoto('arrocera15', -1)">‹</button>
-                        <button class="gallery-nav next" onclick="changePhoto('arrocera15', 1)">›</button>
-                        <div class="gallery-dots" data-dots="arrocera15"><span class="gallery-dot active"></span></div>
+                        <button class="gallery-nav prev" onclick="changePhoto('delta3', -1)">‹</button>
+                        <button class="gallery-nav next" onclick="changePhoto('delta3', 1)">›</button>
+                        <div class="gallery-dots" data-dots="delta3"><span class="gallery-dot active"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Ecoflow Delta 3</h3>
@@ -1140,7 +1203,7 @@
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('bicicleta', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('bicicleta', 1)">›</button>
-                        <div class="gallery-dots" data-dots="bicicleta"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="bicicleta"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                         <span class="product-badge">AGOTADO</span>
                     </div>
                     <div class="product-info">
@@ -1204,13 +1267,13 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="lavadora7">
                             <img src="imagenes/lavadora.jpg" class="gallery-img active" alt="lavadora semiautomatica sankey 7kg">
-                            <img src="imagenes/lavadora1.jpg" class="gallery-img active" alt="lavadora semiautomatica sankey 7kg">
-                            <img src="imagenes/lavadora2.jpg" class="gallery-img active" alt="lavadora semiautomatica sankey 7kg">
-                            <img src="imagenes/lavadora3.jpg" class="gallery-img active" alt="lavadora semiautomatica sankey 7kg">
+                            <img src="imagenes/lavadora1.jpg" class="gallery-img" alt="lavadora semiautomatica sankey 7kg">
+                            <img src="imagenes/lavadora2.jpg" class="gallery-img" alt="lavadora semiautomatica sankey 7kg">
+                            <img src="imagenes/lavadora3.jpg" class="gallery-img" alt="lavadora semiautomatica sankey 7kg">
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('lavadora7', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('lavadora7', 1)">›</button>
-                        <div class="gallery-dots" data-dots="lavadora7"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="lavadora7"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Semiautomática Sankey 7 KG</h3>
@@ -1235,11 +1298,11 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="lavadora10">
                             <img src="imagenes/lavadora10.jpg" class="gallery-img active" alt="lavadora automatica sankey 10.1kg">
-                            <img src="imagenes/lavadora101.jpg" class="gallery-img active" alt="lavadora automatica sankey 10.1kg">
+                            <img src="imagenes/lavadora101.jpg" class="gallery-img" alt="lavadora automatica sankey 10.1kg">
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('lavadora10', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('lavadora10', 1)">›</button>
-                        <div class="gallery-dots" data-dots="lavadora10"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="lavadora10"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Automática Sankey 10.1 KG</h3>
@@ -1272,11 +1335,11 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="split">
                             <img src="imagenes/split.jpg" class="gallery-img active" alt="split 1 tonelada milexus">
-                            <img src="imagenes/split1.jpg" class="gallery-img active" alt="split 1 tonelada milexus">
+                            <img src="imagenes/split1.jpg" class="gallery-img" alt="split 1 tonelada milexus">
                             </div>
                         <button class="gallery-nav prev" onclick="changePhoto('split', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('split', 1)">›</button>
-                        <div class="gallery-dots" data-dots="split"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="split"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Split 1 Tonelada Milexus</h3>
@@ -1337,10 +1400,10 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="ventiladorrec">
                             <img src="imagenes/ventilador.jpg" class="gallery-img active" alt="ventilador recargable 20000mah">
-                            <img src="imagenes/ventilador1.jpg" class="gallery-img active" alt="ventilador recargable 20000mah">  </div>
+                            <img src="imagenes/ventilador1.jpg" class="gallery-img" alt="ventilador recargable 20000mah">  </div>
                         <button class="gallery-nav prev" onclick="changePhoto('ventiladorrec', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('ventiladorrec', 1)">›</button>
-                        <div class="gallery-dots" data-dots="ventiladorrec"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="ventiladorrec"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                         <span class="product-badge">AGOTADO</span>
                     </div>
                     <div class="product-info">
@@ -1434,7 +1497,7 @@
                             </div>
                         <button class="gallery-nav prev" onclick="changePhoto('ventiladorpedestal412', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('ventiladorpedestal412', 1)">›</button>
-                        <div class="gallery-dots" data-dots="ventiladorpedestal_fn17"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+                        <div class="gallery-dots" data-dots="ventiladorpedestal412"><span class="gallery-dot active"></span></div>
                         <span class="product-badge">NUEVO</span>
                     </div>
                     <div class="product-info">
@@ -1594,11 +1657,11 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="bano">
                             <img src="imagenes/juegob.jpg" class="gallery-img active" alt="juego de baño tlv">
-                            <img src="imagenes/juegob1.jpg" class="gallery-img active" alt="juego de baño tlv">
+                            <img src="imagenes/juegob1.jpg" class="gallery-img" alt="juego de baño tlv">
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('bano', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('bano', 1)">›</button>
-                        <div class="gallery-dots" data-dots="bano"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="bano"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Juego de Baño TLV con todos los herrajes</h3>
@@ -1658,11 +1721,11 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="arrocera18">
                             <img src="imagenes/arrozeko.jpg" class="gallery-img active" alt="arrocera18">
-                            <img src="imagenes/arroze.jpg" class="gallery-img active" alt="arrocera18">
+                            <img src="imagenes/arroze.jpg" class="gallery-img" alt="arrocera18">
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('arrocera18', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('arrocera18', 1)">›</button>
-                        <div class="gallery-dots" data-dots="arrocera18"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="arrocera18"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Olla Arrocera 1.8 L</h3>
@@ -1839,12 +1902,12 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="freidora">
                             <img src="imagenes/freid.jpg" class="gallery-img active" alt="freidora">
-                            <img src="imagenes/freid1.jpg" class="gallery-img active" alt="freidora">
-                            <img src="imagenes/freid2.jpg" class="gallery-img active" alt="freidora">
+                            <img src="imagenes/freid1.jpg" class="gallery-img" alt="freidora">
+                            <img src="imagenes/freid2.jpg" class="gallery-img" alt="freidora">
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('freidora', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('freidora', 1)">›</button>
-                        <div class="gallery-dots" data-dots="freidora"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="freidora"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Freidora de Aire Sankey (Vaso de Cristal)</h3>
@@ -2043,11 +2106,11 @@
                     <div class="product-image">
                         <div class="gallery" data-gallery="calderos">
                             <img src="imagenes/clad.jpg" class="gallery-img active" alt="calderos">
-                            <img src="imagenes/clad1.jpg" class="gallery-img active" alt="calderos">
+                            <img src="imagenes/clad1.jpg" class="gallery-img" alt="calderos">
                         </div>
                         <button class="gallery-nav prev" onclick="changePhoto('calderos', -1)">‹</button>
                         <button class="gallery-nav next" onclick="changePhoto('calderos', 1)">›</button>
-                        <div class="gallery-dots" data-dots="calderos"><span class="gallery-dot active"></span></div>
+                        <div class="gallery-dots" data-dots="calderos"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">Juego de Calderos de Inducción</h3>
@@ -2232,6 +2295,12 @@
                     items: items,
                     dots: dots
                 };
+
+                // ===== OCULTAR FLECHAS SI SOLO HAY 1 IMAGEN =====
+                if (galleries[id].total <= 1) {
+                    const parent = gallery.closest('.product-image');
+                    if (parent) parent.classList.add('gallery-single');
+                }
             });
         }
 
@@ -2259,6 +2328,25 @@
 
             g.items[g.current].classList.add('active');
             if (g.dots[g.current]) g.dots[g.current].classList.add('active');
+        }
+
+        // ===== DESCRIPCIONES COLAPSABLES =====
+        function initDescriptions() {
+            document.querySelectorAll('.product-description').forEach(desc => {
+                // Solo añadir botón si el contenido realmente excede el límite
+                if (desc.scrollHeight > desc.clientHeight + 5) {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-ver-mas';
+                    btn.innerHTML = 'Ver más <i class="fas fa-chevron-down"></i>';
+                    btn.onclick = function() {
+                        const isExpanded = desc.classList.toggle('expanded');
+                        this.innerHTML = isExpanded 
+                            ? 'Ver menos <i class="fas fa-chevron-up"></i>' 
+                            : 'Ver más <i class="fas fa-chevron-down"></i>';
+                    };
+                    desc.after(btn);
+                }
+            });
         }
 
         // ===== CARRITO =====
@@ -2352,15 +2440,15 @@
         function sendCartToWhatsApp() {
             if (cart.length === 0) return;
 
-            let message = "Hola TecnoPino, quiero hacer el siguiente pedido:\n\n";
+            let message = "Hola TecnoPino, quiero hacer el siguiente pedido:\\n\\n";
             let total = 0;
             cart.forEach(item => {
                 const subtotal = item.price * item.qty;
                 total += subtotal;
-                message += `• ${item.name}\n`;
-                message += `  Cantidad: ${item.qty} x ${item.price} USD = ${subtotal} USD\n\n`;
+                message += `• ${item.name}\\n`;
+                message += `  Cantidad: ${item.qty} x ${item.price} USD = ${subtotal} USD\\n\\n`;
             });
-            message += `*Total: ${total} USD*\n\n`;
+            message += `*Total: ${total} USD*\\n\\n`;
             message += "Por favor confirmarme disponibilidad y forma de pago. ¡Gracias!";
 
             const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -2432,6 +2520,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             initGalleries();
             updateCartUI();
+            // Pequeño delay para asegurar que el layout esté renderizado antes de medir descripciones
+            setTimeout(initDescriptions, 100);
         });
       // ===== TRACKING DE VISITAS Y TIEMPO EN PÁGINA =====
 (function() {
