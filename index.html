@@ -635,14 +635,14 @@
             .product-image { height: 130px; }
             .product-info { padding: 0.7rem; }
             .product-name { 
-                font-size: 0.82rem; 
-                margin-bottom: 0.25rem;
-                line-height: 1.35;
+                font-size: 0.9rem; 
+                margin-bottom: 0.3rem;
+                line-height: 1.4;
             }
             .product-description { 
-                font-size: 0.72rem; 
-                line-height: 1.45;
-                margin-bottom: 0.4rem;
+                font-size: 0.78rem; 
+                line-height: 1.5;
+                margin-bottom: 0.5rem;
             }
             .product-description ul li { 
                 padding-left: 0.9rem; 
@@ -697,8 +697,8 @@
             .hero h1 { font-size: 1.3rem; }
             .hero { padding: 1.8rem 0.8rem; }
             .btn-whatsapp { padding: 0.6rem 1rem; font-size: 0.8rem; }
-            .product-name { font-size: 0.75rem; }
-            .product-description { font-size: 0.7rem; }
+            .product-name { font-size: 0.85rem; }
+            .product-description { font-size: 0.75rem; }
             .product-price { font-size: 0.9rem; }
             .btn { font-size: 0.7rem; padding: 0.45rem; }
         }
@@ -2433,16 +2433,98 @@
             initGalleries();
             updateCartUI();
         });
-      // Notificar entrada (solo una vez por pestaña para no spamear)
+      // ===== TRACKING DE VISITAS Y TIEMPO EN PÁGINA =====
 (function() {
-    if (sessionStorage.getItem('ntfy_sent')) return;
-    
-    fetch('https://ntfy.sh/mi-pagina-tecnopino-336915', {
-        method: 'POST',
-        body: '👤 Alguien entró a TecnoPino - ' + new Date().toLocaleString('es-CU')
-    }).catch(() => {});
-    
-    sessionStorage.setItem('ntfy_sent', '1');
+    const NTFY_TOPIC = 'https://ntfy.sh/mi-pagina-tecnopino-336915';
+    const START_TIME = Date.now();
+    var notified30s = false;
+    var notifiedExit = false;
+    var heartbeatCount = 0;
+
+    function formatDuration(ms) {
+        var totalSeconds = Math.round(ms / 1000);
+        var m = Math.floor(totalSeconds / 60);
+        var s = totalSeconds % 60;
+        if (m > 0) return m + ' min ' + s + ' s';
+        return s + ' s';
+    }
+
+    // Enviar notificación - múltiples métodos para máxima confiabilidad
+    function sendNotify(body, priority) {
+        priority = priority || 3;
+
+        // Método 1: fetch normal
+        try {
+            fetch(NTFY_TOPIC, {
+                method: 'POST',
+                body: body,
+                headers: { 'Priority': String(priority) }
+            }).catch(function(){});
+        } catch (e) {}
+
+        // Método 2: Image beacon (funciona al cerrar pestaña)
+        try {
+            var img = new Image();
+            img.src = NTFY_TOPIC + '?message=' + encodeURIComponent(body) + '&priority=' + priority;
+        } catch (e) {}
+    }
+
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    var deviceType = isMobile ? '📱 Móvil' : '💻 Desktop';
+
+    // ===== NOTIFICAR ENTRADA =====
+    sendNotify('👤 Entró a TecnoPino — ' + new Date().toLocaleString('es-CU') + ' | ' + deviceType, 3);
+
+    // ===== NOTIFICACIÓN DE 30 SEGUNDOS =====
+    var checkInterval = setInterval(function() {
+        heartbeatCount++;
+        var elapsed = Date.now() - START_TIME;
+
+        if (elapsed >= 30000 && !notified30s) {
+            sendNotify(
+                '⏱️ +30s en TecnoPino | ' + deviceType + 
+                ' | Total: ' + formatDuration(elapsed) +
+                ' | HB:' + heartbeatCount,
+                5  // prioridad máxima
+            );
+            notified30s = true;
+            clearInterval(checkInterval);
+        }
+    }, 1000);
+
+    // Backup: timeout a 35s
+    setTimeout(function() {
+        if (!notified30s) {
+            var elapsed = Date.now() - START_TIME;
+            sendNotify(
+                '⏱️ +30s (backup) en TecnoPino | ' + deviceType + 
+                ' | Total: ' + formatDuration(elapsed),
+                5
+            );
+            notified30s = true;
+            try { clearInterval(checkInterval); } catch(e) {}
+        }
+    }, 35000);
+
+    // ===== NOTIFICAR SALIDA =====
+    function onLeave() {
+        if (notifiedExit) return;
+        var duration = Date.now() - START_TIME;
+        if (duration < 2000) return;
+        sendNotify(
+            '🚪 Salió de TecnoPino | ⏱️ Duración: ' + formatDuration(duration) +
+            ' | ' + new Date().toLocaleString('es-CU') + ' | ' + deviceType,
+            3
+        );
+        notifiedExit = true;
+    }
+
+    window.addEventListener('pagehide', onLeave);
+    window.addEventListener('beforeunload', onLeave);
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') onLeave();
+    });
+    window.addEventListener('unload', onLeave);
 })();
     </script>
 </body>
