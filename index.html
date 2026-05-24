@@ -688,7 +688,14 @@
                 border-radius: 12px; 
                 animation: none; /* quitar animación para fluidez */
             }
-            .product-image { height: 130px; }
+            /* ===== IMÁGENES MÁS ALTAS EN MÓVIL ===== */
+            .product-image { 
+                height: 200px; 
+            }
+            .gallery-img {
+                object-fit: contain;
+                padding: 4px;
+            }
             .product-info { padding: 0.7rem; }
             .product-name { 
                 font-size: 0.9rem; 
@@ -755,7 +762,10 @@
                 grid-template-columns: repeat(2, 1fr); 
                 gap: 0.5rem;
             }
-            .product-image { height: 120px; }
+            /* ===== IMÁGENES MÁS ALTAS EN MÓVIL PEQUEÑO ===== */
+            .product-image { 
+                height: 180px; 
+            }
             .hero h1 { font-size: 1.3rem; }
             .hero { padding: 1.8rem 0.8rem; }
             .btn-whatsapp { padding: 0.6rem 1rem; font-size: 0.8rem; }
@@ -767,7 +777,10 @@
 
         @media (max-width: 360px) {
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
-            .product-image { height: 110px; }
+            /* ===== IMÁGENES MÁS ALTAS EN MÓVIL MUY PEQUEÑO ===== */
+            .product-image { 
+                height: 160px; 
+            }
             .header-container { padding: 0.5rem; }
             .product-info { padding: 0.5rem; }
         }
@@ -1005,7 +1018,6 @@
         }
 </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<base target="_blank">
 </head>
 <body>
 
