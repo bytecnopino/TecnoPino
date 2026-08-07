@@ -1347,6 +1347,65 @@
                                 <li>Hasta 58h de trabajo por carga</li>
                                 <li>Entrega gratis</li>
                             </ul>
+                           </div>
+                        <div class="product-price">65 USD</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="addToCart('Ventilador Recargable 20000mAh', 65)">
+                                <i class="fas fa-cart-plus"></i> Comprar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+🔧 Qué arreglé
+Table
+Error	Solución
+❌ Faltaba </div> de cierre de .gallery	✅ Añadido
+❌ Faltaba </div> de cierre de .product-image	✅ Añadido
+❌ .gallery-nav, .gallery-dots y .product-badge estaban dentro de .gallery	✅ Movidos a .product-image (hermanos de .gallery)
+❌ Los onclick usaban 'ventiladorrec' (ID incorrecto)	✅ Cambiado a 'ventiladornuevo' para que coincida con data-gallery
+❌ Había 2 <span class="gallery-dot"> para 1 sola imagen	✅ Dejado solo 1 con active
+❌ product-info quedaba dentro de la imagen	✅ Ahora es hermano de .product-image dentro de .product-card
+Guarda el archivo, recarga la página y debería verse exactamente igual que los demás productos. 🎯
+no se arreglo , cuando tocas ver mas sucede igual
+Copy
+Share
+Estado nuevo prod
+Execute Python code
+Anidado y galería
+El problema sigue siendo la estructura HTML rota del producto nuevo. Las etiquetas </div> faltantes hacen que todo el contenido (descripción, precio, botón "Ver más") quede adentro de la imagen, y por eso el colapso de la descripción no funciona bien.
+Aquí está el bloque 100% corregido. Búscalo en tu archivo y reemplázalo exactamente:
+🔍 Busca esto (desde data-name="ventilador recargable 20000mah" hasta antes del <!-- NUEVO: Ventilador Recargable EKO -->):
+HTML
+                <div class="product-card" data-name="ventilador recargable 20000mah">
+                    <div class="product-image">
+                        <div class="gallery" data-gallery="ventiladornuevo">
+                            <img src="imagenes/ventilador_nuevo.jpg" class="gallery-img active" alt="ventilador recargable 20000mah">
+                        <button class="gallery-nav prev" onclick="changePhoto('ventiladorrec', -1)">‹</button>
+                        <button class="gallery-nav next" onclick="changePhoto('ventiladorrec', 1)">›</button>
+                        <div class="gallery-dots" data-dots="ventiladornuevo"><span class="gallery-dot active"></span><span class="gallery-dot"></span></div>
+                        <span class="product-badge">NUEVO</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Ventilador Recargable 20000mAh</h3>
+                        <div class="product-description">
+                            <ul>
+                            <li>Batería 20000 mAh</li>
+                            <li>Puerto de carga USB Tipo-C</li>
+                            <li>Cabezal giratorio automático</li>
+                            <li>Control Remoto</li>
+                            <li>Linterna LED</li>
+                            <li>Temporizador programable</li>
+                            <li>Hasta 58h de trabajo por carga</li>
+                            <li>Entrega gratis</li>
+                        </ul>
+                        </div>
+                        <div class="product-price">65 USD</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="addToCart('Ventilador Recargable 20000mAh', 65)">
+                                <i class="fas fa-cart-plus"></i> Comprar
+
+
+
                         
                 <!-- NUEVO: Ventilador Recargable EKO -->
                 <div class="product-card" data-name="ventilador recargable eko">
